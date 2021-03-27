@@ -19,7 +19,7 @@ struct ContentView: View {
     @State private var buttonCaption = "Start"
     @State private var lights: [Bool] = [false, false, false]
     
-    
+
     private var currentLight: Lights {
         for index in 0..<lights.count {
             if lights[index] {
@@ -36,14 +36,13 @@ struct ContentView: View {
             Light(color: .green, isOn: lights[Lights.green.rawValue])
             Spacer()
             VStack {
-                Button(action: { pressButton() }, label: {
+                Button(action: { pressButton() }) {
                     Text(buttonCaption)
                         .font(.title)
                 }
-                )}
+            }
             Spacer()
         }
-        
     }
     
     private func switchLight(_ light: Lights) {
@@ -54,7 +53,6 @@ struct ContentView: View {
     }
     
     private func pressButton() {
-        
         switch (currentLight, buttonCaption) {
         case (.red, _): switchLight(.yellow)
         case (.yellow, _): switchLight(.green)
@@ -64,7 +62,6 @@ struct ContentView: View {
             switchLight(.red)
         case (.none, _): break
         }
-        
     }
 }
 
