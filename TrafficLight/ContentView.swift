@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    enum Status: Int {
+    enum Lights: Int {
         case red
         case yellow
         case green
@@ -19,29 +19,28 @@ struct ContentView: View {
     @State private var buttonCaption = "Start"
     @State private var lights: [Bool] = [false, false, false]
     
-    private var currentLidht: Status {
-        if lights[0] {
-            return .red
-        } else if lights[1] {
-            return .yellow
-        } else if lights[2] {
-            return .green
+    
+    private var currentLidht: Lights {
+        for index in 0..<lights.count {
+            if lights[index] {
+                return Lights(rawValue: index) ?? .none
+            }
         }
         return .none
     }
     
     var body: some View {
         VStack {
-            Light(color: .red, isOn: lights[Status.red.rawValue])
-            Light(color: .yellow, isOn: lights[Status.yellow.rawValue])
-            Light(color: .green, isOn: lights[Status.green.rawValue])
+            Light(color: .red, isOn: lights[Lights.red.rawValue])
+            Light(color: .yellow, isOn: lights[Lights.yellow.rawValue])
+            Light(color: .green, isOn: lights[Lights.green.rawValue])
             Spacer()
             VStack {
-                Button(action: { pressButton() }) {
+                Button(action: { pressButton() }, label: {
                     Text(buttonCaption)
                         .font(.title)
                 }
-            }
+            )}
             Spacer()
         }
        
@@ -51,23 +50,23 @@ struct ContentView: View {
                 
         switch currentLidht {
         case .red:
-            lights[Status.red.rawValue] = false
-            lights[Status.yellow.rawValue] = true
-            lights[Status.green.rawValue] = false
+            lights[Lights.red.rawValue] = false
+            lights[Lights.yellow.rawValue] = true
+            lights[Lights.green.rawValue] = false
         case .yellow:
-            lights[Status.red.rawValue] = false
-            lights[Status.yellow.rawValue] = false
-            lights[Status.green.rawValue] = true
+            lights[Lights.red.rawValue] = false
+            lights[Lights.yellow.rawValue] = false
+            lights[Lights.green.rawValue] = true
         case .green:
-            lights[Status.red.rawValue] = true
-            lights[Status.yellow.rawValue] = false
-            lights[Status.green.rawValue] = false
+            lights[Lights.red.rawValue] = true
+            lights[Lights.yellow.rawValue] = false
+            lights[Lights.green.rawValue] = false
         case .none: break
         }
 
         if buttonCaption == "Start" {
             buttonCaption = "Next"
-            lights[Status.red.rawValue] = true
+            lights[Lights.red.rawValue] = true
         }
         
     }
