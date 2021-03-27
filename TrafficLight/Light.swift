@@ -22,10 +22,6 @@ struct Light: View {
 
     }
     
-    func getInfo() -> Color {
-        color
-    }
-    
 }
 
 struct Light_Previews: PreviewProvider {
