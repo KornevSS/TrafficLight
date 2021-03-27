@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var lights: [Bool] = [false, false, false]
     
     
-    private var currentLidht: Lights {
+    private var currentLight: Lights {
         for index in 0..<lights.count {
             if lights[index] {
                 return Lights(rawValue: index) ?? .none
@@ -46,31 +46,30 @@ struct ContentView: View {
        
     }
     
+    private func switchLight(_ light: Lights) {
+        for index in 0..<lights.count {
+            lights[index] = false
+        }
+        lights[light.rawValue] = true
+    }
+    
     private func pressButton() {
                 
-        switch currentLidht {
-        case .red:
-            lights[Lights.red.rawValue] = false
-            lights[Lights.yellow.rawValue] = true
-            lights[Lights.green.rawValue] = false
-        case .yellow:
-            lights[Lights.red.rawValue] = false
-            lights[Lights.yellow.rawValue] = false
-            lights[Lights.green.rawValue] = true
-        case .green:
-            lights[Lights.red.rawValue] = true
-            lights[Lights.yellow.rawValue] = false
-            lights[Lights.green.rawValue] = false
-        case .none: break
-        }
-
-        if buttonCaption == "Start" {
+        switch (currentLight, buttonCaption) {
+        case (.red, _):
+            switchLight(Lights.yellow)
+        case (.yellow, _):
+            switchLight(Lights.green)
+        case (.green, _):
+            switchLight(Lights.red)
+        case (_, "Start"):
             buttonCaption = "Next"
-            lights[Lights.red.rawValue] = true
+            switchLight(Lights.red)
+        case (.none, _):
+            break
         }
         
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
