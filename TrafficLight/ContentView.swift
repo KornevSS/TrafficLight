@@ -40,10 +40,10 @@ struct ContentView: View {
                     Text(buttonCaption)
                         .font(.title)
                 }
-            )}
+                )}
             Spacer()
         }
-       
+        
     }
     
     private func switchLight(_ light: Lights) {
@@ -54,19 +54,15 @@ struct ContentView: View {
     }
     
     private func pressButton() {
-                
+        
         switch (currentLight, buttonCaption) {
-        case (.red, _):
-            switchLight(Lights.yellow)
-        case (.yellow, _):
-            switchLight(Lights.green)
-        case (.green, _):
-            switchLight(Lights.red)
+        case (.red, _): switchLight(.yellow)
+        case (.yellow, _): switchLight(.green)
+        case (.green, _): switchLight(.red)
         case (_, "Start"):
             buttonCaption = "Next"
-            switchLight(Lights.red)
-        case (.none, _):
-            break
+            switchLight(.red)
+        case (.none, _): break
         }
         
     }
