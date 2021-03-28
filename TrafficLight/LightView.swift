@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct Light: View {
+struct LightView: View {
     
     let color: Color
-    let isOn: Bool
-    
+    var status: LightState
+        
     var body: some View {
         Circle()
             .foregroundColor(color)
             .frame(width: 120, height: 120)
             .overlay(Circle().stroke(Color.white, lineWidth: 2))
             .shadow(radius: 10)
-            .brightness(isOn ? 0.0 : 0.5)
+            .opacity(status.rawValue)
 
     }
     
@@ -26,6 +26,6 @@ struct Light: View {
 
 struct Light_Previews: PreviewProvider {
     static var previews: some View {
-        Light(color: .red, isOn: false)
+        LightView(color: .green, status: .off)
     }
 }

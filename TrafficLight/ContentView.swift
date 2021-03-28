@@ -9,31 +9,15 @@ import SwiftUI
 
 struct ContentView: View {
     
-    enum Lights: Int {
-        case red
-        case yellow
-        case green
-        case none
-    }
-    
     @State private var buttonCaption = "Start"
-    @State private var lights: [Bool] = [false, false, false]
-    
+    @State private var lightState: (LightState, LightState, LightState) = (
+        .off, .off, .off)
 
-    private var currentLight: Lights {
-        for index in 0..<lights.count {
-            if lights[index] {
-                return Lights(rawValue: index) ?? .none
-            }
-        }
-        return .none
-    }
-    
     var body: some View {
         VStack {
-            Light(color: .red, isOn: lights[Lights.red.rawValue])
-            Light(color: .yellow, isOn: lights[Lights.yellow.rawValue])
-            Light(color: .green, isOn: lights[Lights.green.rawValue])
+            LightView(color: .red, status: lightState.0)
+            LightView(color: .yellow, status: lightState.1)
+            LightView(color: .green, status: lightState.2)
             Spacer()
             VStack {
                 Button(action: { pressButton() }) {
@@ -45,22 +29,20 @@ struct ContentView: View {
         }
     }
     
-    private func switchLight(_ light: Lights) {
-        for index in 0..<lights.count {
-            lights[index] = false
+    private func switchLight() {
+        switch lightState {
+        case (.on, .off, .off): lightState = (.off, .on, .off)
+        case (.off, .on, .off): lightState = (.off, .off, .on)
+        case (.off, .off, .on): lightState = (.on, .off, .off)
+        default: lightState = (.on, .off, .off)
+            
         }
-        lights[light.rawValue] = true
     }
     
     private func pressButton() {
-        switch (currentLight, buttonCaption) {
-        case (.red, _): switchLight(.yellow)
-        case (.yellow, _): switchLight(.green)
-        case (.green, _): switchLight(.red)
-        case (_, "Start"):
+        switchLight()
+        if buttonCaption == "Start" {
             buttonCaption = "Next"
-            switchLight(.red)
-        case (.none, _): break
         }
     }
 }
