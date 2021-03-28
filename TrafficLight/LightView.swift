@@ -10,7 +10,7 @@ import SwiftUI
 struct LightView: View {
     
     let color: Color
-    var status: LightState
+    var state: LightState
         
     var body: some View {
         Circle()
@@ -18,7 +18,7 @@ struct LightView: View {
             .frame(width: 120, height: 120)
             .overlay(Circle().stroke(Color.white, lineWidth: 2))
             .shadow(radius: 10)
-            .opacity(status.rawValue)
+            .opacity(state.rawValue)
 
     }
     
@@ -26,6 +26,6 @@ struct LightView: View {
 
 struct Light_Previews: PreviewProvider {
     static var previews: some View {
-        LightView(color: .green, status: .off)
+        LightView(color: .green, state: .off)
     }
 }

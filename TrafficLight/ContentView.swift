@@ -15,9 +15,9 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            LightView(color: .red, status: lightState.0)
-            LightView(color: .yellow, status: lightState.1)
-            LightView(color: .green, status: lightState.2)
+            LightView(color: .red, state: lightState.0)
+            LightView(color: .yellow, state: lightState.1)
+            LightView(color: .green, state: lightState.2)
             Spacer()
             VStack {
                 Button(action: { pressButton() }) {
@@ -35,7 +35,6 @@ struct ContentView: View {
         case (.off, .on, .off): lightState = (.off, .off, .on)
         case (.off, .off, .on): lightState = (.on, .off, .off)
         default: lightState = (.on, .off, .off)
-            
         }
     }
     
